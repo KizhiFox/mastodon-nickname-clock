@@ -9,7 +9,8 @@ Usage: `clock.py \<display name\> \<server name (e.g. mastodon.example)\> \<acce
 Example:
 
 ```bash
-> python clock.py KizhiFox mastodon.ml qwertyuiopasdfghjklzxcvbnm1234567890
+> python clock.py mastodon.ml qwertyuiopasdfghjklzxcvbnm1234567890
+Hello, KizhiFox!
 🕦  11:43
 🕛  12:00
 🕧  12:30
