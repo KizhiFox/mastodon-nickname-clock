@@ -129,9 +129,9 @@ if __name__ == '__main__':
                 current_time = datetime.now()
                 next_time = current_time + timedelta(minutes=30)
                 if next_time.minute < 30:
-                    next_time = next_time.replace(minute=0)
+                    next_time = next_time.replace(minute=0, second=0, microsecond=0)
                 else:
-                    next_time = next_time.replace(minute=30)
+                    next_time = next_time.replace(minute=30, second=0, microsecond=0)
 
                 time_to_sleep = next_time - current_time
                 sleep(time_to_sleep.total_seconds())
