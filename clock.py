@@ -31,7 +31,7 @@ class Clocks:
     clock11_30 = '🕦'
 
     def get_clock(self, hour: int, half: bool) -> str:
-        if hour < 1 or hour > 12:
+        if hour < 0 or hour > 12:
             raise ValueError
         if half:
             minutes = '_30'
@@ -82,9 +82,9 @@ if __name__ == '__main__':
                 current_time = datetime.now()
                 next_time = current_time + timedelta(minutes=30)
                 if next_time.minute < 30:
-                    next_time.replace(minute=0)
+                    next_time = next_time.replace(minute=0)
                 else:
-                    next_time.replace(minute=0)
+                    next_time = next_time.replace(minute=30)
 
                 time_to_sleep = next_time - current_time
                 sleep(time_to_sleep.total_seconds())
