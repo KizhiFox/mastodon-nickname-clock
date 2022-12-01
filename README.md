@@ -4,7 +4,7 @@ This script adds the clock to your Mastodon username that shows the current time
 
 ![Username screenshot](username_screenshot.png)
 
-Usage: `clock.py <display name> <server name (e.g. mastodon.example)> <access token>`
+Usage: `clock.py <server name (e.g. mastodon.example)> <access token>`
 
 Example:
 
