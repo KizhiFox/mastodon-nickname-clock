@@ -87,11 +87,27 @@ def remove_clock(display_name: str, server_name: str, access_token: str):
         sys.exit(-1)
 
 
+def get_display_name(server_name: str, access_token: str):
+    res = requests.patch(
+        f'https://{server_name}/api/v1/accounts/update_credentials',
+        headers={
+            'Authorization': f'Bearer {access_token}'
+        }
+    )
+    if res.status_code == 200:
+        return res.json()['display_name']
+    else:
+        print(res.text)
+        sys.exit(-1)
+
+
 if __name__ == '__main__':
-    if len(sys.argv) == 4:
-        name = sys.argv[1]
-        server = sys.argv[2]
-        token = sys.argv[3]
+    if len(sys.argv) == 3:
+        server = sys.argv[1]
+        token = sys.argv[2]
+
+        name = get_display_name(server, token)
+        print(f'Hello, {name}!')
 
         set_clock(name, server, token)
 
@@ -115,5 +131,5 @@ if __name__ == '__main__':
                 sys.exit(0)
 
     else:
-        print('format: clock.py <display name> <server name (e.g. mastodon.example)> <access token>')
+        print('format: clock.py <server name (e.g. mastodon.example)> <access token>')
         sys.exit(-1)
