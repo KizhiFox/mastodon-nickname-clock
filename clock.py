@@ -69,6 +69,24 @@ def set_clock(display_name: str, server_name: str, access_token: str):
         sys.exit(-1)
 
 
+def remove_clock(display_name: str, server_name: str, access_token: str):
+    res = requests.patch(
+        f'https://{server_name}/api/v1/accounts/update_credentials',
+        headers={
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        },
+        json={
+            'display_name': f'{display_name}'
+        }
+    )
+    if res.status_code == 200:
+        pass
+    else:
+        print(res.text)
+        sys.exit(-1)
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 4:
         name = sys.argv[1]
@@ -92,6 +110,7 @@ if __name__ == '__main__':
                 set_clock(name, server, token)
 
             except KeyboardInterrupt:
+                remove_clock(name, server, token)
                 print('Bye!')
                 sys.exit(0)
 
