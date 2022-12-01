@@ -16,7 +16,7 @@ class Clocks:
     clock4 = '🕓'
     clock4_30 = '🕟'
     clock5 = '🕔'
-    clock_30 = '🕠'
+    clock5_30 = '🕠'
     clock6 = '🕕'
     clock6_30 = '🕡'
     clock7 = '🕖'
@@ -38,6 +38,15 @@ class Clocks:
         else:
             minutes = ''
         return getattr(self, f'clock{hour}{minutes}')
+
+    def get_clocks_endings(self) -> list:
+        all_clocks = [
+            self.clock0, self.clock0_30, self.clock1, self.clock1_30, self.clock2, self.clock2_30,
+            self.clock3, self.clock3_30, self.clock4, self.clock4_30, self.clock5, self.clock5_30,
+            self.clock6, self.clock6_30, self.clock7, self.clock7_30, self.clock8, self.clock8_30,
+            self.clock9, self.clock9_30, self.clock10, self.clock10_30, self.clock11, self.clock11_30,
+        ]
+        return [f' {c}' for c in all_clocks]
 
 
 clocks = Clocks()
@@ -62,9 +71,7 @@ def set_clock(display_name: str, server_name: str, access_token: str):
             'display_name': f'{display_name} {clock}'
         }
     )
-    if res.status_code == 200:
-        pass
-    else:
+    if res.status_code != 200:
         print(res.text)
         sys.exit(-1)
 
@@ -80,9 +87,8 @@ def remove_clock(display_name: str, server_name: str, access_token: str):
             'display_name': f'{display_name}'
         }
     )
-    if res.status_code == 200:
-        pass
-    else:
+
+    if res.status_code != 200:
         print(res.text)
         sys.exit(-1)
 
@@ -94,8 +100,15 @@ def get_display_name(server_name: str, access_token: str):
             'Authorization': f'Bearer {access_token}'
         }
     )
+
     if res.status_code == 200:
-        return res.json()['display_name']
+        display_name = res.json()['display_name']
+        if len(display_name) >= 2:
+            if display_name[-2:] in clocks.get_clocks_endings():
+                display_name = display_name[:-2]
+
+        return display_name
+
     else:
         print(res.text)
         sys.exit(-1)
