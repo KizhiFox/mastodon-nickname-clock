@@ -59,7 +59,7 @@ def set_clock(display_name: str, server_name: str, access_token: str):
 
     clock = clocks.get_clock(hour, half)
 
-    print(f'{clock}  {time.hour}:{time.minute}')
+    print(f'{clock}  {time.strftime("%H:%M")}')
 
     res = requests.patch(
         f'https://{server_name}/api/v1/accounts/update_credentials',
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
             except KeyboardInterrupt:
                 remove_clock(name, server, token)
-                print('Bye!')
+                print('\nBye!')
                 sys.exit(0)
 
     else:
